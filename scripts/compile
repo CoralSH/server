@@ -1,0 +1,5 @@
+
+#!/bin/sh
+
+rm -rf dist
+babel . --ignore node_modules --out-dir dist
