@@ -1,0 +1,22 @@
+{
+  "name": "coral-server",
+  "version": "0.0.0",
+  "description": "the code that powers coral.sh",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoralSH/server.git"
+  },
+  "keywords": [
+    "coral",
+    "coralsh",
+    "shell",
+    "package manager",
+    "package"
+  ],
+  "author": "Tejas Manohar <me@tejas.io> (http://tejas.io)",
+  "bugs": {
+    "url": "https://github.com/CoralSH/server/issues"
+  },
+  "homepage": "https://github.com/CoralSH/server#readme"
+}
