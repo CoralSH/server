@@ -9,6 +9,8 @@ import convert from 'koa-convert'
 import compose from 'koa-compose'
 import bodyParser from 'koa-bodyparser'
 
+import routes from './config/routes'
+
 // new app
 const app = new Koa()
 
@@ -21,6 +23,9 @@ app.use(compose([
   bodyParser(),
   logger()
 ].map(convert)))
+
+// router
+app.use(compose(routes))
 
 /**
  * Server
