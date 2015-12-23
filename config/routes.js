@@ -6,12 +6,12 @@
 import _ from 'koa-route'
 
 // Controllers
-// import * as {{resource}}Ctrl from '../app/controllers/{{resource}}'
+import * as auth from '../app/controllers/auth'
 
 /**
  * Router
  */
 
 export default [
-  // _.get('/{{resource}}!/{{action}}', {{resource}}Ctrl.{{action}})
+  _.post('/auth', auth.init)
 ]
