@@ -15,9 +15,8 @@ export async function register (ctx, next) {
   } catch (err) {
     if (err.code === 11000) ctx.throw('Account already exists', 422)
   }
-  const token = await Token.generate(user)
 
-  ctx.body = { data: { user, token } }
+  ctx.body = { data: user }
 }
 
 /**
