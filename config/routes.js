@@ -5,7 +5,10 @@
 
 import _ from 'koa-route'
 
-// Controllers
+/**
+ * Controllers
+ */
+
 import * as auth from '../app/controllers/auth'
 
 /**
@@ -13,5 +16,7 @@ import * as auth from '../app/controllers/auth'
  */
 
 export default [
-  _.post('/auth', auth.init)
+  // Authentication
+  _.post('/auth/register', auth.register),
+  _.post('/auth/login', auth.login)
 ]

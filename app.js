@@ -4,12 +4,17 @@
  */
 
 import Koa from 'koa'
+import Promise from 'bluebird'
 import logger from 'koa-logger'
 import convert from 'koa-convert'
 import compose from 'koa-compose'
 import bodyParser from 'koa-bodyparser'
 
+import './config/database'
 import routes from './config/routes'
+
+// loud rejection
+Promise.onPossiblyUnhandledRejection(console.error)
 
 // new app
 const app = new Koa()
@@ -34,5 +39,8 @@ app.use(compose(routes))
 const port = process.env.PORT || 3000
 app.listen(port, console.log(`listening on port ${port}`))
 
-// expose `app`
+/**
+ * Expose `app`
+ */
+
 export default app
