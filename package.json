@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "scripts/start",
-    "compile": "scripts/compile"
+    "compile": "scripts/compile",
+    "postinstall": "npm run compile"
   },
   "repository": {
     "type": "git",
