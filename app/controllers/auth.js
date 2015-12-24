@@ -31,6 +31,6 @@ export async function login (ctx, next) {
   ctx.assert(user, 422, 'Account does not exist')
 
   await user.isValidPassword(password)
-    ? ctx.body = { token: await Token.generate(user) }
+    ? ctx.body = { data: await Token.generate(user) }
     : ctx.throw('Invalid credentials', 422)
 }
