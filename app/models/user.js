@@ -25,12 +25,12 @@ const User = new Schema({
     trim: true,
     required: true,
     unique: true,
-    uniqueCaseInsensitive: true,
     minLength: 3,
     maxLength: 25,
     validate: {
-      validator: v => /^[a-zA-Z0-9_-]*$/.test(v),
-      message: 'Username should be >= 3 && <= 25 characters long.'
+      validator: v => /^[a-z0-9_-]*$/.test(v),
+      message: 'Package name should be >= 3 && <= 25 characters long and a-z, \
+\ \ \ 0-9, _, -.'
     }
   },
   hashedPassword: {
