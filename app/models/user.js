@@ -4,12 +4,16 @@
  */
 
 import Promise from 'bluebird'
+import { omit } from 'lodash'
 import { isEmail } from 'validator'
+import httpError from 'http-errors'
 import timestamp from 'mongoose-timestamp'
 import mongoose, { Schema } from 'mongoose'
+import enhancedUnique from 'mongoose-unique-validator'
 
 import bcrypt from '../../lib/wrappers/bcrypt'
 import { hashPassword } from '../../lib/util/crypto'
+import { isPassword } from '../../lib/util/validator'
 
 /**
  * Schema
@@ -19,28 +23,30 @@ const User = new Schema({
   username: {
     type: String,
     trim: true,
-    lowercase: true,
     required: true,
     unique: true,
+    uniqueCaseInsensitive: true,
+    minLength: 3,
+    maxLength: 25,
+    validate: {
+      validator: v => /^[a-zA-Z0-9_-]*$/.test(v),
+      message: 'Username should be >= 3 && <= 25 characters long.'
+    }
   },
-  password: {
+  hashedPassword: {
     type: String,
-    match: [
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
-      'Password should contain at least one digit, lowercase letter, uppercase \
-letter, and 8 characters overall.'
-    ],
     required: true
   },
   email: {
     type: String,
-    lowercase: true,
     trim: true,
-    validate: {
-      validator: email => isEmail(email)
-    },
     required: true,
-    unique: true
+    unique: true,
+    uniqueCaseInsensitive: true,
+    validate: {
+      validator: email => isEmail(email),
+      message: 'Email address should abide RFC 5322.'
+    }
   }
 })
 
@@ -49,22 +55,27 @@ letter, and 8 characters overall.'
  */
 
 User.plugin(timestamp)
+User.plugin(enhancedUnique, {
+  message: 'Account with this {PATH} already exists.'
+})
 
 /**
  * Statics
  */
 
 User.statics.register = function(obj) {
-  const user = new this(obj)
-  return user.hashPassword()
+  const user = new this(omit(obj, 'password'))
+  return user.setPassword(obj.password)
 }
 
 /**
  * Methods
  */
 
-User.methods.hashPassword = async function () {
-  this.password = await hashPassword(this.password)
+User.methods.setPassword = async function (pass) {
+  if (!isPassword(pass)) throw httpError(400, 'Password should contain >= 1 \
+\ digit, lowercase letter, uppercase letter, and >= 8 characters long.')
+  this.hashedPassword = await hashPassword(pass)
   return this.saveAsync()
 }
 

@@ -5,8 +5,8 @@
 
 import Promise from 'bluebird'
 import jwt from 'jsonwebtoken'
-import mongoose, { Schema } from 'mongoose'
 import timestamp from 'mongoose-timestamp'
+import mongoose, { Schema } from 'mongoose'
 
 /**
  * Schema
