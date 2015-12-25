@@ -3,8 +3,8 @@
  * Dependencies
  */
 
-import Promise from 'bluebird'
 import { omit } from 'lodash'
+import Promise from 'bluebird'
 import { isEmail } from 'validator'
 import httpError from 'http-errors'
 import timestamp from 'mongoose-timestamp'
